@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
+# from wtforms.fields.html5 import EmailField
 from wtforms.validators import ValidationError, DataRequired, EqualTo, Email
 from app.models import User
 
@@ -17,7 +18,7 @@ class RegistrationForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField("Repeat Password", validators=[
                               DataRequired(), EqualTo("password")])
-    submit = BooleanField("Regiser")
+    submit = SubmitField("Regiser")
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
