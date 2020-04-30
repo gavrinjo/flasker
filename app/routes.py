@@ -10,7 +10,6 @@ from app.models import User
 @app.route("/index")
 @login_required
 def index():
-    """user = {"username": "Gavrinjo"}"""
     posts = [
         {"author": {"username": "Ena"}, "body": "bla bla bla"},
         {"author": {"username": "Mama"}, "body": "sine vrati se kuci"},
