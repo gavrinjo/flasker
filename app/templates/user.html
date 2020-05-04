@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <img src="{{ avatars.default(size='s') }}">
     <h1>{{ user.username }}</h1>
     <hr>
     {% for post in posts %}
