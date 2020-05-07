@@ -10,3 +10,4 @@ class Config(object):
     ) or "sqlite:///" + os.path.join(basedir, "app.db")
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     AVATARS_SAVE_PATH = os.path.join(basedir, "static/avatars")
+    POSTS_PER_PAGE = 25
