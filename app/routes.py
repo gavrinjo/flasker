@@ -25,7 +25,7 @@ def index():
         db.session.commit()
         flash("Your post is now live!!")
         return redirect(url_for("index"))
-    posts = current_user.post.all()
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
     return render_template("index.html", title="Home", form=form, posts=posts)
 
 
@@ -72,11 +72,8 @@ def register():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    posts = [
-        {"author": user, "body": "test 1 something"},
-        {"author": user, "body": "test 2 something"}
-    ]
-    return render_template("user.html", user=user, posts=posts)
+    posts = user.post.order_by(Post.timestamp.desc()).all()
+    return render_template("user.html", title=user.username, user=user, posts=posts)
 
 
 @app.route("/edit_profile", methods=["GET", "POST"])
