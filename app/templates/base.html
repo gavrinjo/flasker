@@ -1,17 +1,13 @@
-<html lang="en">
+{% extends "bootstrap/base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% if title %}
-    <title>{{ title }} - GFlasker</title>
-    {% else %}
-    <title>Welcome - GFlasker</title>
-    {% endif %}
-</head>
+{% block title %}
+    {% if title %}{{ title }} - GFlasker{% else %}Welcome - GFlasker{% endif %}
+{% endblock title %}
 
-<body>
-    <div>Gavrinjo Flasker Blog:
+
+{% block navbar %}
+    <nav class="navbar navbar-default">
+        <span class="navbar-brand mb-0 h1">Gavrinjo Flasker Blog:</span>
         <a href="{{ url_for('index') }}">Home</a>
         {% if current_user.is_anonymous %}
         <a href="{{ url_for('login') }}">Login</a>
@@ -19,19 +15,25 @@
         <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
         <a href="{{ url_for('logout') }}">Logout</a>
         {% endif %}
+    </nav>
+{% endblock navbar %}
 
+{% block content %}
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {# application content needs to be provided in the app_content block #}
+        {% block app_content %} {% endblock app_content %}
     </div>
-    <hr>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-    {% block content %} {% endblock content %}
-</body>
+{% endblock content %}
 
-</html>
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
+{% endblock %}
