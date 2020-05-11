@@ -6,6 +6,7 @@ from flask_login import LoginManager
 from flask_avatars import Avatars
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
+from flask_mail import Mail
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -13,6 +14,7 @@ db = SQLAlchemy(app)
 login = LoginManager(app)
 login.login_view = "login"
 migrate = Migrate(app, db)
+mail = Mail(app)
 avatars = Avatars(app)
 moment = Moment(app)
 bootstrap = Bootstrap(app)
