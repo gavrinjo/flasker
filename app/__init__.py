@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 login = LoginManager(app)
-login.login_view = "login"
+login.login_view = "auth.login"
 migrate = Migrate(app, db)
 mail = Mail(app)
 avatars = Avatars(app)
@@ -21,5 +21,13 @@ bootstrap = Bootstrap(app)
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 
+from app.errors import bp as errors_bp
+app.register_blueprint(errors_bp)
 
-from app import routes, models, errors
+from app.auth import bp as auth_bp
+app.register_blueprint(auth_bp, url_prefix="/auth")
+
+from app.main import bp as main_bp
+app.register_blueprint(main_bp)
+
+from app import models
