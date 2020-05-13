@@ -22,7 +22,7 @@
         <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
         <p>{{ form.submit() }}</p>
     </form>
-    <p>For new users - <a href="{{ url_for('register') }}">Create an account</a></p>
-    <p>Forgot your Password? - <a href="{{ url_for('reset_password_request') }}">Click to reset it</a></p>
+    <p>For new users - <a href="{{ url_for('auth.register') }}">Create an account</a></p>
+    <p>Forgot your Password? - <a href="{{ url_for('auth.reset_password_request') }}">Click to reset it</a></p>
 
 {% endblock app_content %}
