@@ -32,6 +32,9 @@ pycodestyle==2.5.0
 pyflakes==2.1.1
 PyJWT==1.7.1
 pylint==2.5.0
+pylint-flask==0.6
+pylint-flask-sqlalchemy==0.2.0
+pylint-plugin-utils==0.6
 python-dateutil==2.8.1
 python-dotenv==0.13.0
 python-editor==1.0.4

@@ -1,8 +1,8 @@
 from datetime import datetime
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, current_app
 from flask_login import current_user, login_required
 from werkzeug.urls import url_parse
-from app import app, db
+from app import db
 from app.main import bp
 from app.main.forms import EditProfileForm, PostForm
 from app.models import User, Post
@@ -29,7 +29,7 @@ def index():
         return redirect(url_for("main.index"))
     page = request.args.get("page", 1, type=int)
     posts = Post.query.order_by(Post.timestamp.desc()).paginate(
-        page, app.config["POSTS_PER_PAGE"], False)
+        page, current_app.config["POSTS_PER_PAGE"], False)
     next_url = url_for("main.index", page=posts.next_num) \
         if posts.has_next else None
     prev_url = url_for("main.index", page=posts.prev_num) \
