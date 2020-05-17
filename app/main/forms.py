@@ -28,6 +28,5 @@ class EditProfileForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    post = TextAreaField("What is on your mind!", validators=[
-                         DataRequired(), Length(min=1, max=250)])
+    post = TextAreaField("What is on your mind!", validators=[DataRequired()], id="summernote")
     submit = SubmitField("Submit")

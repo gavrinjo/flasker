@@ -1,11 +1,21 @@
-{% extends "bootstrap/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-{% block title %}
-    {% if title %}{{ title }} - GFlasker{% else %}Welcome - GFlasker{% endif %}
-{% endblock title %}
+    <!-- include libraries(jQuery, bootstrap) -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.js"></script>
 
-{% block navbar %}
+    <title>{% if title %}{{ title }} - GFlasker{% else %}Welcome - GFlasker{% endif %}</title>
+</head>
+<body>
     <nav class="navbar navbar-default">
         <span class="navbar-brand mb-0 h1">Gavrinjo Flasker Blog:</span>
         <a href="{{ url_for('main.index') }}">Home</a>
@@ -16,9 +26,6 @@
         <a href="{{ url_for('auth.logout') }}">Logout</a>
         {% endif %}
     </nav>
-{% endblock navbar %}
-
-{% block content %}
     <div class="container">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -31,9 +38,7 @@
         {# application content needs to be provided in the app_content block #}
         {% block app_content %} {% endblock app_content %}
     </div>
-{% endblock content %}
-
-{% block scripts %}
-    {{ super() }}
+    {{ moment.include_jquery() }}
     {{ moment.include_moment() }}
-{% endblock %}
+</body>
+</html>
