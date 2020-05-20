@@ -1,9 +1,11 @@
+import os
+from uuid import uuid4
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, current_app, send_from_directory
 from flask_login import current_user, login_required
 from werkzeug.urls import url_parse
-from flask_ckeditor import upload_fail, upload_success
-import os
+from werkzeug.utils import secure_filename
+# from flask_ckeditor import upload_fail, upload_success
 from app import db
 from app.main import bp
 from app.main.forms import EditProfileForm, PostForm
@@ -39,20 +41,33 @@ def index():
     return render_template("index.html", title="Home", form=form, posts=posts.items, next_url=next_url, prev_url=prev_url)
 
 
-@bp.route("/files/<filename>")
+@bp.route("/uploads/<filename>")
 def uploaded_files(filename):
     path = current_app.config["UPLOADED_PATH"]
     return send_from_directory(path, filename)
 
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in current_app.config["ALLOWED_EXTENSIONS"]
+
+
 @bp.route('/upload', methods=['POST', 'GET'])
 def upload():
-    f = request.files.get('upload')
-    extension = f.filename.split('.')[-1].lower()
-    if extension not in ['jpg', 'gif', 'png', 'jpeg']:
-        return upload_fail(message='Image only!')
-    f.save(os.path.join(current_app.config['UPLOADED_PATH'], f.filename))
-    url = url_for('main.uploaded_files', filename=f.filename)
-    return upload_success(url=url)
+    if request.method == "POST":
+        # check if the post request has the file part
+        if "image" not in request.files:
+            flash("No image file selected!!")
+            return redirect(request.url)
+        file = request.files["image"]
+        # if user does not select file, browser also submit an empty part without filename
+        if file.filename == "":
+            flash("No image file selected!!")
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.normpath(os.path.join(current_app.config["UPLOADED_PATH"], filename)))
+            return file.filename
 
 
 @bp.route("/user/<username>")
