@@ -18,4 +18,10 @@ class Config(object):
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
     ADMINS = ["gavrinjo@gmx.com"]
+    CKEDITOR_PKG_TYPE = os.environ.get('CKEDITOR_PKG_TYPE') or "standard"
+    CKEDITOR_SERVE_LOCAL = os.environ.get("CKEDITOR_SERVE_LOCAL") or False
+    CKEDITOR_HEIGHT = os.environ.get("CKEDITOR_HEIGHT")
+    CKEDITOR_FILE_UPLOADER = "main.upload"
+    CKEDITOR_FILE_BROWSER = "main.upload"
+    UPLOADED_PATH = os.path.join(basedir, "uploads")
     POSTS_PER_PAGE = 5

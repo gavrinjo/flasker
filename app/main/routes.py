@@ -1,7 +1,9 @@
 from datetime import datetime
-from flask import render_template, flash, redirect, url_for, request, current_app
+from flask import render_template, flash, redirect, url_for, request, current_app, send_from_directory
 from flask_login import current_user, login_required
 from werkzeug.urls import url_parse
+from flask_ckeditor import upload_fail, upload_success
+import os
 from app import db
 from app.main import bp
 from app.main.forms import EditProfileForm, PostForm
@@ -35,6 +37,22 @@ def index():
     prev_url = url_for("main.index", page=posts.prev_num) \
         if posts.has_prev else None
     return render_template("index.html", title="Home", form=form, posts=posts.items, next_url=next_url, prev_url=prev_url)
+
+
+@bp.route("/files/<filename>")
+def uploaded_files(filename):
+    path = current_app.config["UPLOADED_PATH"]
+    return send_from_directory(path, filename)
+
+@bp.route('/upload', methods=['POST', 'GET'])
+def upload():
+    f = request.files.get('upload')
+    extension = f.filename.split('.')[-1].lower()
+    if extension not in ['jpg', 'gif', 'png', 'jpeg']:
+        return upload_fail(message='Image only!')
+    f.save(os.path.join(current_app.config['UPLOADED_PATH'], f.filename))
+    url = url_for('main.uploaded_files', filename=f.filename)
+    return upload_success(url=url)
 
 
 @bp.route("/user/<username>")

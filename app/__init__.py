@@ -7,6 +7,7 @@ from flask_avatars import Avatars
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_mail import Mail
+from flask_ckeditor import CKEditor
 
 
 db = SQLAlchemy()
@@ -15,6 +16,7 @@ login = LoginManager()
 login.login_view = "auth.login"
 login.login_message = "Please log in to access this page"
 mail = Mail()
+ckeditor = CKEditor()
 moment = Moment()
 bootstrap = Bootstrap()
 avatars = Avatars()
@@ -28,6 +30,7 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     login.init_app(app)
     mail.init_app(app)
+    ckeditor.init_app(app)
     moment.init_app(app)
     bootstrap.init_app(app)
     avatars.init_app(app)
