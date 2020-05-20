@@ -1,5 +1,5 @@
 import os
-from uuid import uuid4
+import uuid
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, current_app, send_from_directory
 from flask_login import current_user, login_required
@@ -40,12 +40,12 @@ def index():
         if posts.has_prev else None
     return render_template("index.html", title="Home", form=form, posts=posts.items, next_url=next_url, prev_url=prev_url)
 
-
+"""
 @bp.route("/uploads/<filename>")
 def uploaded_files(filename):
     path = current_app.config["UPLOADED_PATH"]
     return send_from_directory(path, filename)
-
+"""
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -55,16 +55,13 @@ def allowed_file(filename):
 @bp.route('/upload', methods=['POST', 'GET'])
 def upload():
     if request.method == "POST":
-        # check if the post request has the file part
-        if "image" not in request.files:
-            flash("No image file selected!!")
-            return redirect(request.url)
         file = request.files["image"]
-        # if user does not select file, browser also submit an empty part without filename
-        if file.filename == "":
-            flash("No image file selected!!")
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
+        if file.filename == '':
+            return "error.png"
+        if file and allowed_file(file.filename): 
+            if os.path.exists(current_app.config["UPLOADED_PATH"] + "/" + file.filename): # if image with same name exists
+                _dot = file.filename.find(".")
+                file.filename = file.filename[:_dot] + str(uuid.uuid4()) + file.filename[_dot:]
             filename = secure_filename(file.filename)
             file.save(os.path.normpath(os.path.join(current_app.config["UPLOADED_PATH"], filename)))
             return file.filename
