@@ -10,6 +10,7 @@ from app import db
 from app.main import bp
 from app.main.forms import EditProfileForm, PostForm
 from app.models import User, Post
+# from flask_uploads import UploadSet
 
 
 
@@ -42,30 +43,38 @@ def index():
 
 """
 @bp.route("/uploads/<filename>")
-def uploaded_files(filename):
-    path = current_app.config["UPLOADED_PATH"]
-    return send_from_directory(path, filename)
-"""
+def uploaded_file(filename):
+    return send_from_directory(current_app.config["UPLOADED_PATH"], filename)
+
 
 def allowed_file(filename):
-    return '.' in filename and \
+    return "." in filename and \
            filename.rsplit('.', 1)[1].lower() in current_app.config["ALLOWED_EXTENSIONS"]
 
 
-@bp.route('/upload', methods=['POST', 'GET'])
+@bp.route("/upload", methods=["POST", "GET"])
 def upload():
+    form = PostForm()
     if request.method == "POST":
+        if "image" not in request.files:
+            flash("No file part")
+            return redirect(request.url)
         file = request.files["image"]
         if file.filename == '':
-            return "error.png"
+            flash("No selected file")
+            return redirect(request.url)
         if file and allowed_file(file.filename): 
-            if os.path.exists(current_app.config["UPLOADED_PATH"] + "/" + file.filename): # if image with same name exists
-                _dot = file.filename.find(".")
-                file.filename = file.filename[:_dot] + str(uuid.uuid4()) + file.filename[_dot:]
+            #if os.path.exists(current_app.config["UPLOADED_PATH"] + "/" + file.filename): # if image with same name exists
+            _dot = file.filename.find(".")
+            file.filename = str(uuid.uuid4()) + file.filename[_dot:]
             filename = secure_filename(file.filename)
             file.save(os.path.normpath(os.path.join(current_app.config["UPLOADED_PATH"], filename)))
+            flash("File successfully uploaded")
             return file.filename
-
+        else:
+            flash("Not allowed file typed")
+            return redirect(request.url)
+"""
 
 @bp.route("/user/<username>")
 @login_required
