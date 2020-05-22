@@ -7,7 +7,7 @@ from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 # from flask_ckeditor import upload_fail, upload_success
 from app import db
-from app.main import bp
+from app.main import bp, handlers
 from app.main.forms import EditProfileForm, PostForm
 from app.models import User, Post
 # from flask_uploads import UploadSet
@@ -27,10 +27,10 @@ def before_request():
 def index():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(body=form.post.data, author=current_user)
-        print(post)
-        # db.session.add(post)
-        # db.session.commit()
+        post = Post(body=handlers.img_src(form.post.data), author=current_user)
+        # print(post)
+        db.session.add(post)
+        db.session.commit()
         flash("Your post is now live!!")
         return redirect(url_for("main.index"))
     page = request.args.get("page", 1, type=int)
