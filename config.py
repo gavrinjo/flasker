@@ -23,6 +23,6 @@ class Config(object):
     # CKEDITOR_HEIGHT = os.environ.get("CKEDITOR_HEIGHT")
     # CKEDITOR_FILE_UPLOADER = "main.upload"
     # CKEDITOR_FILE_BROWSER = "main.upload"
-    UPLOADED_PATH = os.path.join(basedir, "uploads")
+    UPLOADED_PATH = os.path.join(basedir, "static/uploads")
     ALLOWED_EXTENSIONS = set(["png", "jpg", "jpeg", "gif"])
     POSTS_PER_PAGE = 5

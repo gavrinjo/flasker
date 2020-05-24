@@ -1,5 +1,6 @@
 import os
 import uuid
+import base64
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, current_app, send_from_directory
 from flask_login import current_user, login_required
@@ -7,7 +8,7 @@ from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 # from flask_ckeditor import upload_fail, upload_success
 from app import db
-from app.main import bp, handlers
+from app.main import bp
 from app.main.forms import EditProfileForm, PostForm
 from app.models import User, Post
 # from flask_uploads import UploadSet
@@ -27,7 +28,7 @@ def before_request():
 def index():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(body=handlers.img_src(form.post.data), author=current_user)
+        post = Post(body=img_src(form.post.data), author=current_user)
         # print(post)
         db.session.add(post)
         db.session.commit()
@@ -41,6 +42,25 @@ def index():
     prev_url = url_for("main.index", page=posts.prev_num) \
         if posts.has_prev else None
     return render_template("index.html", title="Home", form=form, posts=posts.items, next_url=next_url, prev_url=prev_url)
+
+
+
+def img_decode(s):
+    extension = (s.split("data:image/"))[1].split(";base64")[0]
+    filename = str(uuid.uuid4())
+    b64string = (s.split("base64,"))[1].split('" ')[0]
+    img_dict = {"filename": filename+"."+extension, "b64string": b64string}
+    return img_dict
+
+
+def img_src(s):
+    with open(os.path.normpath(os.path.join(current_app.config["UPLOADED_PATH"], img_decode(s)["filename"])), "wb") as fh:
+        fh.write(base64.b64decode(str(img_decode(s)["b64string"])))
+    to_replace = (s.split("src="))[1].split(" data-")[0]
+    s = s.replace(to_replace, "\""+url_for('static\\uploads', filename=os.path.basename(fh.name))+"\"")
+    return s
+
+
 
 """
 @bp.route("/uploads/<filename>")
