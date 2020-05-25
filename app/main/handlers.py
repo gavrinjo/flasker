@@ -1,6 +1,7 @@
 import base64
 import uuid
 import os
+import re
 from flask import current_app, url_for
 
 
@@ -26,7 +27,7 @@ def proc_img(s):
     Arguments:
         s {[type]} -- [description]
     """
-    for img_tag in s.fin:
-        pass
-    pass
+    for img_tag in re.findall(r"(?<=<img)(.*)(?=>)", s):
+        img_src(img_tag)
+    return s
 
