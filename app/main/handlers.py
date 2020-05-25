@@ -18,3 +18,15 @@ def img_src(s):
     to_replace = (s.split("src="))[1].split(" data-")[0]
     s = s.replace(to_replace, "\""+url_for("static", filename="uploads/"+os.path.basename(fh.name))+"\"")
     return s
+
+
+def proc_img(s):
+    """This is function!!
+
+    Arguments:
+        s {[type]} -- [description]
+    """
+    for img_tag in s.fin:
+        pass
+    pass
+

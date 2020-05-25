@@ -7,15 +7,13 @@ load_dotenv(os.path.join(basedir, ".env"))
 
 
 class Config(object):
-    # BASEDIR = os.path.abspath(os.path.dirname(__file__))
-    # TOP_LEVEL_DIR = os.path.abspath(os.curdir)
     STATIC_ROOT = os.path.join(basedir, "app/static")
     SECRET_KEY = os.environ.get("SECRET_KEY") or "some random characters"
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DATABASE_URL"
     ) or "sqlite:///" + os.path.join(basedir, "app.db")
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    AVATARS_SAVE_PATH = os.path.join(basedir, "static/avatars")
+    AVATARS_SAVE_PATH = os.path.join(STATIC_ROOT, "avatars")
     MAIL_SERVER = os.environ.get("MAIL_SERVER")
     MAIL_PORT = int(os.environ.get("MAIL_PORT") or 25)
     MAIL_USE_TLS = os.environ.get("MAIL_USE_TLS") is not None
