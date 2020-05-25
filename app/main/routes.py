@@ -8,7 +8,7 @@ from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 # from flask_ckeditor import upload_fail, upload_success
 from app import db
-from app.main import bp
+from app.main import bp, handlers
 from app.main.forms import EditProfileForm, PostForm
 from app.models import User, Post
 # from flask_uploads import UploadSet
@@ -28,10 +28,10 @@ def before_request():
 def index():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(body=img_src(form.post.data), author=current_user)
-        # print(post)
-        db.session.add(post)
-        db.session.commit()
+        post = Post(body=handlers.img_src(form.post.data), author=current_user)
+        print(post)
+        # db.session.add(post)
+        # db.session.commit()
         flash("Your post is now live!!")
         return redirect(url_for("main.index"))
     page = request.args.get("page", 1, type=int)
@@ -43,59 +43,6 @@ def index():
         if posts.has_prev else None
     return render_template("index.html", title="Home", form=form, posts=posts.items, next_url=next_url, prev_url=prev_url)
 
-
-
-def img_decode(s):
-    extension = (s.split("data:image/"))[1].split(";base64")[0]
-    filename = str(uuid.uuid4())
-    b64string = (s.split("base64,"))[1].split('" ')[0]
-    img_dict = {"filename": filename+"."+extension, "b64string": b64string}
-    return img_dict
-
-
-def img_src(s):
-    with open(os.path.normpath(os.path.join(current_app.config["UPLOADED_PATH"], img_decode(s)["filename"])), "wb") as fh:
-        fh.write(base64.b64decode(str(img_decode(s)["b64string"])))
-    to_replace = (s.split("src="))[1].split(" data-")[0]
-    s = s.replace(to_replace, "\""+url_for('static\\uploads', filename=os.path.basename(fh.name))+"\"")
-    return s
-
-
-
-"""
-@bp.route("/uploads/<filename>")
-def uploaded_file(filename):
-    return send_from_directory(current_app.config["UPLOADED_PATH"], filename)
-
-
-def allowed_file(filename):
-    return "." in filename and \
-           filename.rsplit('.', 1)[1].lower() in current_app.config["ALLOWED_EXTENSIONS"]
-
-
-@bp.route("/upload", methods=["POST", "GET"])
-def upload():
-    form = PostForm()
-    if request.method == "POST":
-        if "image" not in request.files:
-            flash("No file part")
-            return redirect(request.url)
-        file = request.files["image"]
-        if file.filename == '':
-            flash("No selected file")
-            return redirect(request.url)
-        if file and allowed_file(file.filename): 
-            #if os.path.exists(current_app.config["UPLOADED_PATH"] + "/" + file.filename): # if image with same name exists
-            _dot = file.filename.find(".")
-            file.filename = str(uuid.uuid4()) + file.filename[_dot:]
-            filename = secure_filename(file.filename)
-            file.save(os.path.normpath(os.path.join(current_app.config["UPLOADED_PATH"], filename)))
-            flash("File successfully uploaded")
-            return file.filename
-        else:
-            flash("Not allowed file typed")
-            return redirect(request.url)
-"""
 
 @bp.route("/user/<username>")
 @login_required

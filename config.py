@@ -2,10 +2,14 @@ import os
 from dotenv import load_dotenv
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+top_level_dir = os.path.abspath(os.curdir)
 load_dotenv(os.path.join(basedir, ".env"))
 
 
 class Config(object):
+    # BASEDIR = os.path.abspath(os.path.dirname(__file__))
+    # TOP_LEVEL_DIR = os.path.abspath(os.curdir)
+    STATIC_ROOT = os.path.join(basedir, "app/static")
     SECRET_KEY = os.environ.get("SECRET_KEY") or "some random characters"
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DATABASE_URL"
@@ -23,6 +27,6 @@ class Config(object):
     # CKEDITOR_HEIGHT = os.environ.get("CKEDITOR_HEIGHT")
     # CKEDITOR_FILE_UPLOADER = "main.upload"
     # CKEDITOR_FILE_BROWSER = "main.upload"
-    UPLOADED_PATH = os.path.join(basedir, "static/uploads")
+    UPLOADED_PATH = os.path.join(STATIC_ROOT, "uploads")
     ALLOWED_EXTENSIONS = set(["png", "jpg", "jpeg", "gif"])
     POSTS_PER_PAGE = 5
