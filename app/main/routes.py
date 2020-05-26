@@ -28,7 +28,7 @@ def before_request():
 def index():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(body=handlers.proc_img(form.post.data), author=current_user)
+        post = Post(body=handlers.img_proc(form.post.data), author=current_user)
         print(post)
         # db.session.add(post)
         # db.session.commit()
