@@ -1,4 +1,4 @@
-"""
+
 def img_decode(s):
     extension = (s.split("data:image/"))[1].split(";base64")[0]
     filename = str(uuid.uuid4())
@@ -13,10 +13,7 @@ def img_src(s):
     to_replace = (s.split("src="))[1].split(" data-")[0]
     s = s.replace(to_replace, "\""+url_for(os.path.normpath('main.uploads'), filename=os.path.basename(fh.name), _external=True)+"\"")
     return s
-"""
 
-
-"""
 @bp.route("/uploads/<filename>")
 def uploaded_file(filename):
     return send_from_directory(current_app.config["UPLOADED_PATH"], filename)
@@ -49,4 +46,3 @@ def upload():
         else:
             flash("Not allowed file typed")
             return redirect(request.url)
-"""
