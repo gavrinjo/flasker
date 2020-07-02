@@ -10,8 +10,9 @@
                     <a href="{{ url_for('main.user', username=post.author.username) }}">
                         {{ post.author.username }}
                     </a>
+                    <a href="{{ url_for('content.edit_page', id=post.id) }}">Edit post</a>
                 </span>
-                said {{ moment(post.timestamp).fromNow() }}:
+                said {{ moment(post.timestamp).fromNow() }}
                 <br>
                 <span id="post{{ post.id }}">{{ post.body|safe }}</span>
             </td>

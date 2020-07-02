@@ -23,23 +23,14 @@ def postit():
 @bp.route("/edit_page/<id>", methods=["GET", "POST"])
 @login_required
 def edit_page(id=None):
-    # form = EditPostForm()
+    form = EditPostForm()
     page = Post.query.get(id)
-    form = PostForm(obj=page)
+    # form.post.data = page
     if form.validate_on_submit():
-        form.populate_obj(page)
-        
-        """
-        if form.cancel.data:
-            if id:
-                return redirect(url_for("page_view", id=id))
-            else:
-                return redirect(url_for("main.index"))
-
-        elif form.submit.data:
-            return redirect(url_for("submit"))
-        #if request.method == "POST":
-        #post = Post.query.filter_by(id=id)
-        """
-
-    return render_template("edit_page.html", title="Edit Post Content")
+        kk = form.post.data
+        # page.Post(body=handlers.img_proc(form.post.data))
+        page.body = handlers.img_proc(kk)
+        db.session.commit()
+        flash("You have edited post successfully !!")
+        return redirect(url_for("main.index"))
+    return render_template("edit_page.html", title="Edit Post Content", form=form)
