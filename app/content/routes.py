@@ -29,7 +29,7 @@ def edit_page(id=None):
     body = post.body
     form.post.data = body
     if form.validate_on_submit():
-        post.body = form.post.data
+        post.body = handlers.img_proc(form.post.data)
         flag_modified(post, "body")
         db.session.merge(post)
         db.session.flush()
