@@ -4,6 +4,7 @@ from app import db
 from app.content import bp, handlers
 from app.content.forms import PostForm, EditPostForm
 from app.models import Post
+from sqlalchemy.orm.attributes import flag_modified
 
 
 @bp.route("/postit", methods=["GET", "POST"])
@@ -24,12 +25,14 @@ def postit():
 @login_required
 def edit_page(id=None):
     form = EditPostForm()
-    page = Post.query.get(id)
-    # form.post.data = page
+    post = Post.query.get(id)
+    body = post.body
+    form.post.data = body
     if form.validate_on_submit():
-        kk = form.post.data
-        # page.Post(body=handlers.img_proc(form.post.data))
-        page.body = handlers.img_proc(kk)
+        post.body = form.post.data
+        flag_modified(post, "body")
+        db.session.merge(post)
+        db.session.flush()
         db.session.commit()
         flash("You have edited post successfully !!")
         return redirect(url_for("main.index"))
