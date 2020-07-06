@@ -27,13 +27,11 @@ def edit_page(id=None):
     form = EditPostForm()
     post = Post.query.get(id)
     body = post.body
-    form.post.data = body
     if form.validate_on_submit():
         post.body = handlers.img_proc(form.post.data)
-        flag_modified(post, "body")
-        db.session.merge(post)
-        db.session.flush()
         db.session.commit()
         flash("You have edited post successfully !!")
         return redirect(url_for("main.index"))
+    elif request.method == "GET":
+        form.post.data = body
     return render_template("edit_page.html", title="Edit Post Content", form=form)
