@@ -13,7 +13,6 @@ def postit():
     form = PostForm()
     if form.validate_on_submit():
         post = Post(body=handlers.img_proc(form.post.data), author=current_user)
-        # print(post)
         db.session.add(post)
         db.session.commit()
         flash("Your post is now live!!")
@@ -26,12 +25,14 @@ def postit():
 def edit_page(id=None):
     form = EditPostForm()
     post = Post.query.get(id)
-    body = post.body
     if form.validate_on_submit():
-        post.body = handlers.img_proc(form.post.data)
-        db.session.commit()
-        flash("You have edited post successfully !!")
-        return redirect(url_for("main.index"))
+        if request.form.get("cancel"):
+            pass
+        else:
+            post.body = handlers.img_proc(form.post.data)
+            db.session.commit()
+            flash("You have edited post successfully!!")
+            return redirect(url_for("main.index"))
     elif request.method == "GET":
-        form.post.data = body
+        form.post.data = post.body
     return render_template("edit_page.html", title="Edit Post Content", form=form)

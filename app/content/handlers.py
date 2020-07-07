@@ -10,7 +10,7 @@ def img_proc(src):
     data = bs(src, "html.parser")
     for img in data.find_all("img"):
         img_src = img["src"]
-        if not os.path.exists(os.path.normpath(os.path.join(current_app.config["UPLOADED_PATH"], img_src))):
+        if not os.path.exists(os.path.normpath(os.path.join(current_app.config["UPLOADED_PATH"], os.path.basename(img_src)))):
             try:
                 filename = str(uuid.uuid4())
                 extension = str(re.findall(r"(?<=image/)(.*)(?=;base64)", img_src)[0])
@@ -19,8 +19,8 @@ def img_proc(src):
                     fh.write(base64.b64decode(b64string))
                 img["src"] = url_for("static", filename="uploads/"+os.path.basename(fh.name))
                 img["data-filename"] = os.path.basename(fh.name)
-            except IndexError:
-                print("missing file!!")
+            except IndexError as err:
+                print(f"Something went wrong!! --> {err}")
         else:
             continue
     return data.prettify()

@@ -3,7 +3,7 @@
 {% block app_content %}
     <h1>Edit content</h1>
     {% if form %}
-    <form action="" method="post">
+    <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         {{ form.post.label }}
         {{ form.post() }}
