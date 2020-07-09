@@ -27,7 +27,7 @@ def edit_page(id=None):
     post = Post.query.get(id)
     if form.validate_on_submit():
         if request.form.get("cancel"):
-            pass
+            return redirect(url_for("main.index"))
         else:
             post.body = handlers.img_proc(form.post.data)
             db.session.commit()
