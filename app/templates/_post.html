@@ -9,6 +9,7 @@
                 <span class="user_popup">
                     <a href="{{ url_for('main.user', username=post.author.username) }}">{{ post.author.username }}</a>
                     <a href="{{ url_for('content.edit_page', id=post.id) }}">Edit post</a>
+                    <a href="{{ url_for('content.delete_page', id=post.id) }}">Delete post</a>
                 </span>
                 said {{ moment(post.timestamp).fromNow() }}
                 <br>

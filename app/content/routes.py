@@ -36,3 +36,12 @@ def edit_page(id=None):
     elif request.method == "GET":
         form.post.data = post.body
     return render_template("edit_page.html", title="Edit Post Content", form=form)
+
+
+@bp.route("/delete_page/<id>", methods=["GET", "POST"])
+@login_required
+def delete_page(id=None):
+    post = Post.query.get(id)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(url_for("main.index"))
