@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from app import db
 from app.content import bp, handlers
 from app.content.forms import PostForm, EditPostForm
-from app.models import Post
+from app.models import Article
 from sqlalchemy.orm.attributes import flag_modified
 
 
@@ -12,7 +12,7 @@ from sqlalchemy.orm.attributes import flag_modified
 def postit():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(body=handlers.img_proc(form.post.data), author=current_user)
+        post = Article(title=form.title.data, subtitle=form.subtitle.data, body=handlers.img_proc(form.post.data), author=current_user)
         db.session.add(post)
         db.session.commit()
         flash("Your post is now live!!")
@@ -24,16 +24,20 @@ def postit():
 @login_required
 def edit_page(id=None):
     form = EditPostForm()
-    post = Post.query.get(id)
+    post = Article.query.get(id)
     if form.validate_on_submit():
         if request.form.get("cancel"):
             return redirect(url_for("main.index"))
         else:
+            post.title = form.title.data
+            post.subtitle = form.subtitle.data
             post.body = handlers.img_proc(form.post.data)
             db.session.commit()
             flash("You have edited post successfully!!")
             return redirect(url_for("main.index"))
     elif request.method == "GET":
+        form.title.data = post.title
+        form.subtitle.data = post.subtitle
         form.post.data = post.body
     return render_template("edit_page.html", title="Edit Post Content", form=form)
 
@@ -41,7 +45,7 @@ def edit_page(id=None):
 @bp.route("/delete_page/<id>", methods=["GET", "POST"])
 @login_required
 def delete_page(id=None):
-    post = Post.query.get(id)
+    post = Article.query.get(id)
     db.session.delete(post)
     db.session.commit()
     return redirect(url_for("main.index"))

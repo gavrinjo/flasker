@@ -1,19 +1,18 @@
 {% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
     <h1>Edit content</h1>
     {% if form %}
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        {{ form.post.label }}
-        {{ form.post() }}
-        {% for error in form.post.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-        {{ form.submit() }}
-        {{ form.cancel() }}
-    </form>
-
-    <script src="{{ url_for('static', filename='summernote.js') }}" type="text/javascript"></script>
+    <div class="post-feed">
+        <div class="col-md">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
     {% endif %}
 {% endblock app_content %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='summernote.js') }}" type="text/javascript"></script>
+    {{ super() }}
+{% endblock %}

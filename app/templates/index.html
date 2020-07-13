@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
-{% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <h1>Hello {{ current_user.username }}</h1>
     {% for post in posts %}
         {% include "post_preview.html" %}
     {% endfor %}
@@ -14,7 +12,6 @@
             <li class="page-item{% if not prev_url %} disabled {% endif %}">
                 <a class="page-link" href="{{ prev_url or '#' }}" tabindex="-1">Newer posts</a>
             </li>
-            
         </ul>
     </nav>
 {% endblock app_content %}

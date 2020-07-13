@@ -1,0 +1,222 @@
+
+.post-feed {
+	width: 100%;
+	display: grid;
+	grid-auto-rows: -webkit-min-content;
+	grid-auto-rows: min-content;
+	grid-template-columns: 1fr;
+	margin: 0 auto
+}
+
+@media (max-width:800px) {
+	.post-feed {
+		grid-gap: 20px;
+		width: 92%
+	}
+}
+
+.post-card {
+	width: 100%;
+	overflow: hidden;
+	background-color: #fff;
+	box-shadow: 0 1px 4px rgba(39, 44, 49, .15)
+}
+
+@media (max-width:800px) {
+	.post-card {
+		padding: 0
+	}
+}
+
+.post-card *,
+.post-card:hover {
+	text-decoration: none
+}
+
+.post-card:hover .post-card-image {
+	opacity: .7
+}
+
+.post-card .primary-tag {
+	margin-bottom: 10px;
+	line-height: 1
+}
+
+.post-card .primary-tag a {
+	color: #607fa2;
+	font-family: TTNormsPro-DemiBold, sans-serif;
+	font-size: 1.1em
+}
+
+@media (max-width:600px) {
+	.post-card .primary-tag a {
+		font-size: 1em
+	}
+}
+
+.post-card .primary-tag a:hover,
+.post-card .primary-tag a:hover * {
+	color: #40cebb
+}
+
+.post-card .post-card-title {
+	margin: 0;
+	padding: 0;
+	color: #4e576a;
+	font-family: TTNormsPro-Bold, sans-serif;
+	font-size: 2em;
+	font-weight: unset;
+	letter-spacing: -.3px;
+	line-height: 1;
+	transition: all .2s ease-out
+}
+
+@media (max-width:600px) {
+	.post-card .post-card-title {
+		margin-bottom: 0;
+		font-family: TTNormsPro-DemiBold, sans-serif;
+		font-size: 1.6em
+	}
+}
+
+@media (max-width:400px) {
+	.post-card .post-card-title {
+		font-size: 1.5em
+	}
+}
+
+.post-card .post-card-title:hover {
+	color: #40cebb;
+	cursor: pointer
+}
+
+.post-card .post-card-image {
+	width: 100%;
+	min-height: 392px;
+	background: #494e59 no-repeat 50%;
+	background-size: cover;
+	transition: opacity .2s ease-out
+}
+
+@media (max-width:1040px) {
+	.post-card .post-card-image {
+		height: auto!important;
+		min-height: 256px
+	}
+}
+
+@media (max-width:800px) {
+	.post-card .post-card-image {
+		min-height: unset
+	}
+}
+
+.post-card .post-card-image:hover {
+	cursor: pointer
+}
+
+.post-card .post-card-detail {
+	padding: 30px;
+	overflow: hidden
+}
+
+@media (max-width:600px) {
+	.post-card .post-card-detail {
+		padding: 20px
+	}
+}
+
+.post-card .post-card-detail .post-card-excerpt {
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	width: -webkit-fill-available;
+	width: -moz-available;
+	width: stretch;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin: 10px auto 30px;
+	color: #5e6877;
+	font-family: AvenirNextLTPro-Medium, sans-serif;
+	font-size: 1.2em;
+	letter-spacing: -.5px;
+	line-height: 1.2;
+	transition: all .2s ease-out
+}
+
+@media (max-width:800px) {
+	.post-card .post-card-detail .post-card-excerpt {
+		margin: 10px auto 30px
+	}
+}
+
+@media (max-width:600px) {
+	.post-card .post-card-detail .post-card-excerpt {
+		margin: 10px auto 20px;
+		font-size: 1.05em
+	}
+}
+
+.post-card .post-card-footer {
+	-webkit-line-clamp: 1;
+	display: flex;
+	align-items: flex-end;
+	margin: 0;
+	overflow: hidden;
+	text-overflow: ellipsis
+}
+
+.post-card .post-card-footer .meta-items {
+	display: flex;
+	align-items: center;
+	color: #646f7d;
+	font-family: AvenirNextLTPro-Medium, sans-serif;
+	font-size: .9em;
+	line-height: 1;
+	white-space: nowrap;
+	transition: all .2s ease-out
+}
+
+.post-card .post-card-footer .meta-items * {
+	line-height: 1
+}
+
+.post-card .post-card-footer .meta-items a {
+	color: #646f7d;
+	transition: all .2s ease-out
+}
+
+.post-card .post-card-footer .meta-items span {
+	white-space: nowrap;
+	transition: all .2s ease-out
+}
+
+.post-card .post-card-footer .meta-items svg {
+	margin-right: 5px;
+	font-size: 1.8em
+}
+
+.post-card .post-card-footer .meta-items .author-avatar {
+	width: 35px;
+	height: 35px;
+	margin-right: 10px;
+	border-radius: 50%
+}
+
+.post-card .post-card-footer .meta-items .author-name {
+	display: block;
+	margin-bottom: 4px;
+	color: #646f7d;
+	font-family: TTNormsPro-DemiBold, sans-serif;
+	font-size: 1.2em;
+	line-height: 1
+}
+
+.post-card .post-card-footer .meta-items .post-card-meta-info {
+	font-family: AvenirNextLTPro-Medium, sans-serif;
+	font-size: .95em
+}
+
+.post-card .post-card-footer .meta-items .post-card-meta-info .meta-item {
+	margin-right: 8px
+}

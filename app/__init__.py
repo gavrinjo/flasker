@@ -32,9 +32,6 @@ def create_app(config_class=Config):
     bootstrap.init_app(app)
     avatars.init_app(app)
 
-    app.jinja_env.trim_blocks = True
-    app.jinja_env.lstrip_blocks = True
-
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
 
@@ -46,6 +43,9 @@ def create_app(config_class=Config):
 
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
+
+    app.jinja_env.trim_blocks = True
+    app.jinja_env.lstrip_blocks = True
 
     return app
 
