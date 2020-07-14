@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block app_content %}
+<div>
+    <h1>{{ post.title|safe }}</h1>
+    <div>
+        <div>
+            <a href="{{ url_for('main.user', username=post.author.username) }}">
+                <span>
+                    {{ post.author.username }}
+                </span>
+            </a>
+        </div>
+        <div>
+            <span>
+                {{ moment(post.timestamp).format('D.M.YYYY, hh:mm') }}
+            </span>
+        </div>
+        <div>
+            <span id="post{{ post.id }}">{{ post.body|safe }}</span>
+        </div>
+    </div>
+</div>
+{% endblock app_content %}

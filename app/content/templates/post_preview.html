@@ -7,36 +7,34 @@
         </a>
         -->
         <div class="post-card-detail">
-            <!-- tagging part of the post
-            <div class="primary-tag golang">
-                <span class="Ghost__Post__5ecc6a4300e7df7ddcba4fae">
-                    <a class="" href="/tag/golang">
-                        Golang
-                    </a>
-                </span>
-            </div>
-            -->
-            <!-- Post title (this needs to be added to db.model) -->
-            <a href="#">
-                <h2 class="post-card-title">
-                    {{ post.title|safe }}
-                </h2>
+            <a href="{{ url_for('content.page_view', title=post.title) }}">
+                <h2 class="post-card-title">{{ post.title|safe }}</h2>
             </a>
-            <!-- Post subtitle (this needs to be added to db.model) -->
-            <section class="post-card-excerpt">
-                {{ post.subtitle|safe }}
-            </section>
+            <section class="post-card-excerpt">{{ post.subtitle|safe }}</section>
+            
             <footer class="post-card-footer">
                 <div class="meta-items">
-                <img alt="{{ post.author.username }}" class="author-avatar" src="{{ post.author.avatar(64) }}"/>
+                    <img alt="{{ post.author.username }}" class="author-avatar" src="{{ post.author.avatar(64) }}"/>
                     <div>
-                        <a class="author-name" href="{{ url_for('main.user', username=post.author.username) }}">
-                            {{ post.author.username }}
-                        </a>
+                        <a class="author-name" href="{{ url_for('main.user', username=post.author.username) }}">{{ post.author.username }}</a>
                         <div class="post-card-meta-info">
-                            <span class="meta-item date">{{ moment(post.timestamp).fromNow() }}</span>
-                            <a href="{{ url_for('content.edit_page', id=post.id) }}">Edit post</a>
-                            <a href="{{ url_for('content.delete_page', id=post.id) }}">Delete post</a>
+                            <span class="meta-item date">
+                                {{ moment(post.timestamp).fromNow() }}
+                            </span>
+                            {% if not current_user.is_anonymous %}
+                            <span class="meta-item separator">
+                                •
+                            </span>
+                            <span class="meta-item reading-time">
+                                <a href="{{ url_for('content.edit_page', id=post.id) }}">Edit post</a>
+                            </span>
+                            <span class="meta-item separator">
+                                •
+                            </span>
+                            <span class="meta-item reading-time">
+                                <a href="{{ url_for('content.delete_page', id=post.id) }}">Delete post</a>
+                            </span>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

@@ -20,6 +20,13 @@ def postit():
     return render_template("postit.html", title="Post Content", form=form)
 
 
+@bp.route("/<title>", methods=["GET", "POST"])
+# @login_required
+def page_view(title):
+    post = Article.query.filter_by(title=title).first_or_404()
+    return render_template("page_view.html", title=post.title, post=post, author=post.author.username)
+
+
 @bp.route("/edit_page/<id>", methods=["GET", "POST"])
 @login_required
 def edit_page(id=None):
