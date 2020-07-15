@@ -1,4 +1,4 @@
-     <div class="card mb-6">
+     <div class="card mb-3">
         <!-- Post Imae (this needs to be added to db.model maybe)
         <a href="/deploy-golang-app-nginx/">
             <picture>
@@ -6,6 +6,7 @@
             </picture>
         </a>
         -->
+        <img alt="{{ post.title|safe }}" class="card-img-top" data-src="https://hackersandslackers-cdn.storage.googleapis.com/2020/02/uWSGI@2x.jpg" src="https://hackersandslackers-cdn.storage.googleapis.com/2020/02/uWSGI@2x.jpg"/>
         <div class="card-body">
             <a href="{{ url_for('content.page_view', title=post.title) }}">
                 <h2 class="card-title">{{ post.title|safe }}</h2>
