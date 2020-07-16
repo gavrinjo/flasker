@@ -5,12 +5,12 @@
         {% include "post_preview.html" %}
     {% endfor %}
     <nav aria-label="Page navigation example">
-        <ul class="pagination text-center">
+        <ul class="pagination justify-content-center">
             <li class="page-item{% if not next_url %} disabled {% endif %}">
-                <a class="page-link" href="{{ next_url or '#' }}" tabindex="-1">Older posts</a>
+                <a class="page-link" href="{{ next_url or '#' }}" aria-label="Previous" tabindex="-1"><span aria-hidden="true">&laquo;</span></a>
             </li>
             <li class="page-item{% if not prev_url %} disabled {% endif %}">
-                <a class="page-link" href="{{ prev_url or '#' }}" tabindex="-1">Newer posts</a>
+                <a class="page-link" href="{{ prev_url or '#' }}" aria-label="Next" tabindex="-1"><span aria-hidden="true">&raquo;</span></a>
             </li>
         </ul>
     </nav>
