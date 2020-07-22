@@ -7,6 +7,7 @@ from flask_avatars import Avatars
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_mail import Mail
+from flask_admin import Admin
 
 
 db = SQLAlchemy()
@@ -18,6 +19,7 @@ mail = Mail()
 moment = Moment()
 bootstrap = Bootstrap()
 avatars = Avatars()
+admin = Admin()
 
 
 def create_app(config_class=Config):
@@ -31,6 +33,7 @@ def create_app(config_class=Config):
     moment.init_app(app)
     bootstrap.init_app(app)
     avatars.init_app(app)
+    admin.init_app(app)
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)

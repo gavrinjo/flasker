@@ -1,4 +1,4 @@
-     <div class="card mb-3">
+     <div class="row">
         <!-- Post Imae (this needs to be added to db.model maybe)
         <a href="/deploy-golang-app-nginx/">
             <picture>
@@ -6,12 +6,14 @@
             </picture>
         </a>
         -->
-        <img alt="{{ post.title|safe }}" class="card-img-top" data-src="https://hackersandslackers-cdn.storage.googleapis.com/2020/02/uWSGI@2x.jpg" src="https://hackersandslackers-cdn.storage.googleapis.com/2020/02/uWSGI@2x.jpg"/>
-        <div class="card-body">
+        <div class="col-lg-2 col-sm-2 col-5">
+            <img alt="{{ post.title|safe }}" class="img-thumbnail" width="150px" data-src="https://hackersandslackers-cdn.storage.googleapis.com/2020/02/uWSGI@2x.jpg" src="https://hackersandslackers-cdn.storage.googleapis.com/2020/02/uWSGI@2x.jpg"/>
+        </div>
+        <div class="col-lg-10 col-sm-10 col-7">
             <a href="{{ url_for('content.page_view', title=post.title) }}">
-                <h2 class="card-title">{{ post.title|safe }}</h2>
+                <h4 class="text-primary">{{ post.title|safe }}</h4>
             </a>
-            <p class="card-text"><h4>{{ post.subtitle|safe }}</h4></p>
+            <p class="card-text">{{ post.body|safe|truncate(128, True) }}</p>
             <small class="text-muted">
                 <ul class="list-inline">
                     <li class="list-inline-item"><a href="{{ url_for('main.user', username=post.author.username) }}">{{ post.author.username }}</a></li>

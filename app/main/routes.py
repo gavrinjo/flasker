@@ -20,6 +20,7 @@ def before_request():
 @bp.route("/")
 @bp.route("/index")
 def index():
+    #user = User.query.filter_by(username=current_user.username).first_or_404()
     page = request.args.get("page", 1, type=int)
     posts = Article.query.order_by(Article.timestamp.desc()).paginate(
         page, current_app.config["POSTS_PER_PAGE"], False)

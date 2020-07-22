@@ -24,7 +24,13 @@
 
 {% block navbar %}
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-        <span class="navbar-brand">Flasker Blog: {{ current_user.username }}</span> 
+        <a class="navbar-brand" href="{{ url_for('main.user', username=current_user.username) }}">Flasker Blog: {{ current_user.username }}
+            {% if current_user.is_anonymous %}
+            <img style="max-height: 64px; max-width: 64px;" class="rounded-circle" src="{{ url_for('static', filename='profile-pic-dummy.png') }}">
+            {% else %}
+            <img class="rounded-circle" src="{{ current_user.avatar(64) }}">
+            {% endif %}
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
