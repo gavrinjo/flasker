@@ -1,39 +1,24 @@
 {% extends 'base.html' %}
 {% block app_content %}
-    <div class="row">
-        <div class="col">
-            <div class="card">
-                fgfg
+    <article class="blog-post px-3 py-5 p-md-5">
+        <div class="container">
+            <head>
+                <h2 class="title mb-2">{{ post.title|safe }}</h2>
+                <div class="meta mb-3">
+                    <span>{{ post.author.username }}</span>
+                    <span>{{ moment(post.timestamp).format('D.M.YYYY, hh:mm') }}</span>
+                    {% if post.author.username == current_user.username %}
+                    <span><a href="{{ url_for('content.edit_page', id=post.id) }}">Edit post</a></span>
+                    <span><a href="{{ url_for('content.delete_page', id=post.id) }}">Delete post</a></span>
+                    {% endif %}
+                </div>
+            </head>
+            <div class="blog-post-body">
+                <figure class="blog-banner">
+                    <img class="img-fluid" alt="image" src="https://hackersandslackers-cdn.storage.googleapis.com/2020/02/uWSGI@2x.jpg"/>
+                </figure>
+                <p id="post{{ post.id }}">{{ post.body|safe }}</p>
             </div>
         </div>
-        <div class="col-9">
-            <h1>{{ post.title|safe }}</h1>
-            <div class="post-meta">
-                <div class="meta-item author">
-                    <a href="{{ url_for('main.user', username=post.author.username) }}">
-                        <svg fill="currentColor" height="1em" stroke="currentColor" stroke-width="0" viewbox="0 0 1024 1024" width="1em" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M858.5 763.6a374 374 0 0 0-80.6-119.5 375.63 375.63 0 0 0-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 0 0-80.6 119.5A371.7 371.7 0 0 0 136 901.8a8 8 0 0 0 8 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 0 0 8-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z"></path>
-                        </svg>
-                        <span>
-                            {{ post.author.username }}
-                        </span>
-                    </a>
-                </div>
-                <div class="meta-item date">
-                    <svg fill="currentColor" height="1em" stroke="currentColor" stroke-width="0" viewbox="0 0 1024 1024" width="1em" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M880 184H712v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H384v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H144c-17.7 0-32 14.3-32 32v664c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V216c0-17.7-14.3-32-32-32zm-40 656H184V460h656v380zM184 392V256h128v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h256v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h128v136H184z"></path>
-                    </svg>
-                    <span>
-                        {{ moment(post.timestamp).format('D.M.YYYY, hh:mm') }}
-                    </span>
-                </div>
-            </div>
-            <img alt="{{ post.title|safe }}" class="img-fluid" alt="Responsive image" data-src="https://hackersandslackers-cdn.storage.googleapis.com/2020/02/uWSGI@2x.jpg" src="https://hackersandslackers-cdn.storage.googleapis.com/2020/02/uWSGI@2x.jpg"/>
-            <article class="post">
-                <main class="post-content content-body">
-                    <span id="post{{ post.id }}">{{ post.body|safe }}</span>
-                </main>
-            </article>
-        </div>
-    </div>
+    </article>
 {% endblock app_content %}

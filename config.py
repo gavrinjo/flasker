@@ -22,4 +22,4 @@ class Config(object):
     ADMINS = ["gavrinjo@gmx.com"]
     UPLOADED_PATH = os.path.join(STATIC_ROOT, "uploads")
     ALLOWED_EXTENSIONS = set(["png", "jpg", "jpeg", "gif"])
-    POSTS_PER_PAGE = 1
+    POSTS_PER_PAGE = 10

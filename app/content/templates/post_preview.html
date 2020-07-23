@@ -1,6 +1,6 @@
     <div class="item mb-5">
         <div class="media">
-            <img alt="{{ post.title|safe }}" class="mr-3 img-fluid post-thumb d-none d-md-flex" width="150px" data-src="https://hackersandslackers-cdn.storage.googleapis.com/2020/02/uWSGI@2x.jpg" src="https://hackersandslackers-cdn.storage.googleapis.com/2020/02/uWSGI@2x.jpg"/>
+            <img alt="image" class="mr-3 img-fluid post-thumb d-none d-md-flex" src="{{ url_for('static', filename='blog-post-thumb-3.jpg') }}"/>
             <div class="media-body">
                 <h4 class="title mb-1"><a href="{{ url_for('content.page_view', title=post.title) }}">{{ post.title|safe }}</a></h4>
                 <div class="meta mb-1">
