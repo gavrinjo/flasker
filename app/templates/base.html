@@ -17,8 +17,8 @@
     <!-- include summernote css/js -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-    <!-- Custom css  -->
-    <link rel="stylesheet" href="{{url_for('static', filename='theme_1.css')}}">
+    <!-- Custom css
+    <link rel="stylesheet" href="{{url_for('static', filename='theme_1.css')}}">  -->
     <title>{% if title %}{{ title }} - GFlasker{% else %}Welcome - GFlasker{% endif %}</title>
 {% endblock %}
 
@@ -66,7 +66,8 @@
 {% endblock %}
 
 {% block content %}
-    <div class="main-wrapper">
+    <div class="container-lg border">
+        <div class="row">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
@@ -77,6 +78,7 @@
 
         {# application content needs to be provided in the app_content block #}
         {% block app_content %} {% endblock app_content %}
+        </div>
     </div>
 {% endblock %}
 
