@@ -1,24 +1,20 @@
 {% extends 'base.html' %}
 {% block app_content %}
-    <article class="blog-post px-3 py-5 p-md-5">
-        <div class="container">
-            <head>
-                <h2 class="title mb-2">{{ post.title|safe }}</h2>
-                <div class="meta mb-3">
-                    <span>{{ post.author.username }}</span>
-                    <span>{{ moment(post.timestamp).format('D.M.YYYY, hh:mm') }}</span>
-                    {% if post.author.username == current_user.username %}
-                    <span><a href="{{ url_for('content.edit_page', id=post.id) }}">Edit post</a></span>
-                    <span><a href="{{ url_for('content.delete_page', id=post.id) }}">Delete post</a></span>
-                    {% endif %}
-                </div>
-            </head>
-            <div class="blog-post-body">
-                <figure class="blog-banner">
-                    <img class="img-fluid" alt="image" src="https://hackersandslackers-cdn.storage.googleapis.com/2020/02/uWSGI@2x.jpg"/>
-                </figure>
-                <p id="post{{ post.id }}">{{ post.body|safe }}</p>
+    <div class="col-8">
+        <head>
+            <h1 class="mt-4">{{ post.title|safe }}</h1>
+            <div class="meta mb-3">
+                <span>{{ post.author.username }}</span>
+                <span>{{ moment(post.timestamp).format('D.M.YYYY, hh:mm') }}</span>
+                {% if post.author.username == current_user.username %}
+                <span><a href="{{ url_for('content.edit_page', id=post.id) }}">Edit post</a></span>
+                <span><a href="{{ url_for('content.delete_page', id=post.id) }}">Delete post</a></span>
+                {% endif %}
             </div>
+        </head>
+        <div class="blog-post-body">
+            <img class="img-fluid" alt="image" src="https://hackersandslackers-cdn.storage.googleapis.com/2020/02/uWSGI@2x.jpg"/>
+            <p id="post{{ post.id }}">{{ post.body|safe }}</p>
         </div>
-    </article>
+    </div>
 {% endblock app_content %}

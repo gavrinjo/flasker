@@ -17,8 +17,8 @@
     <!-- include summernote css/js -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-    <!-- Custom css
-    <link rel="stylesheet" href="{{url_for('static', filename='theme_1.css')}}">  -->
+    <!-- Custom css  -->
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
     <title>{% if title %}{{ title }} - GFlasker{% else %}Welcome - GFlasker{% endif %}</title>
 {% endblock %}
 
@@ -28,7 +28,7 @@
             {% if current_user.is_anonymous %}
             <img style="max-height: 64px; max-width: 64px;" class="rounded-circle" src="{{ url_for('static', filename='profile-pic-dummy.png') }}">
             {% else %}
-            <img class="rounded-circle" src="{{ current_user.avatar(64) }}">
+            <img style="max-height: 64px; max-width: 64px;" class="rounded-circle" src="{{ current_user.avatar(64) }}">
             {% endif %}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">

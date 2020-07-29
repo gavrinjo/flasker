@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
 
 {% block app_content %}
-  <div class="col-8 border">
-    {% for post in posts %}
-        {% include "post_preview.html" %}
-    {% endfor %}
-    <nav class="blog-nav nav nav-justified my-5">
-      <a class="nav-link-prev nav-item nav-link {% if not prev_url %}disabled{% endif %} rounded-left" href="{{ prev_url or '#' }}">Previous<i class="arrow-prev fas fa-long-arrow-alt-left"></i></a>
-      <a class="nav-link-next nav-item nav-link {% if not next_url %}disabled{% endif %} rounded-right" href="{{ next_url or '#' }}">Next<i class="arrow-next fas fa-long-arrow-alt-right"></i></a>
-    </nav>
-  </div>
-  <div class="col-4 border">
-    bla
-  </div>
+    <div class="col-8">
+        {% for post in posts %}
+            {% include "post_preview.html" %}
+        {% endfor %}
+        <nav class="blog-nav nav nav-justified my-5">
+            <a class="nav-link-prev nav-item nav-link {% if not prev_url %}disabled{% endif %} rounded-left" href="{{ prev_url or '#' }}">Previous<i class="arrow-prev fas fa-long-arrow-alt-left"></i></a>
+            <a class="nav-link-next nav-item nav-link {% if not next_url %}disabled{% endif %} rounded-right" href="{{ next_url or '#' }}">Next<i class="arrow-next fas fa-long-arrow-alt-right"></i></a>
+        </nav>
+    </div>
+    <div class="col-4 border-left">
+        <div class="border rounded my-3">
+            <p>bla</p>
+        </div>
+    </div>
 {% endblock app_content %}

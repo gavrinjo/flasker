@@ -1,18 +1,24 @@
-    <div>
-        <div>
-            <img alt="image" class="mr-3 img-fluid post-thumb d-none d-md-flex" src="{{ url_for('static', filename='blog-post-thumb-3.jpg') }}"/>
-            <div class="media-body">
-                <h4 class="title mb-1"><a href="{{ url_for('content.page_view', title=post.title) }}">{{ post.title|safe }}</a></h4>
-                <div class="meta mb-1">
-                    <span><a href="{{ url_for('main.user', username=post.author.username) }}">{{ post.author.username }}</a></span>
-                    <span>{{ moment(post.timestamp).fromNow() }}</span>
-                    {% if post.author.username == current_user.username %}
-                    <span><a href="{{ url_for('content.edit_page', id=post.id) }}">Edit post</a></span>
-                    <span><a href="{{ url_for('content.delete_page', id=post.id) }}">Delete post</a></span>
-                    {% endif %}
+    <div class="card my-3">
+        <div class="row no-gutters">
+            <div class="col-lg-4">
+                <img alt="image" src="https://hackersandslackers-cdn.storage.googleapis.com/2020/02/uWSGI@2x.jpg"/>
+            </div>
+            <div class="col-lg-8">
+                <div class="card-body">
+                    <h4 class="card-title"><a class="card-link" href="{{ url_for('content.page_view', title=post.title) }}">{{ post.title|safe }}</a></h4>
+                    <p class="card-text">{{ post.body | truncate(254, True) | safe }}</p>
+                    <p><small class="text-muted"><a class="card-link" href="{{ url_for('content.page_view', title=post.title) }}">Read more &rarr;</a></small></p>
+                    <p>
+                        <small class="text-muted">
+                            <span><a class="card-link" href="{{ url_for('main.user', username=post.author.username) }}">{{ post.author.username }}</a></span>
+                            <span>{{ moment(post.timestamp).fromNow() }}</span>
+                            {% if post.author.username == current_user.username %}
+                            <span><a class="card-link" href="{{ url_for('content.edit_page', id=post.id) }}">Edit post</a></span>
+                            <span><a class="card-link" href="{{ url_for('content.delete_page', id=post.id) }}">Delete post</a></span>
+                            {% endif %}
+                        </small>
+                    </p>
                 </div>
-                <div class="intro">{{ post.body | truncate(254, True) | safe }}</div>
-                <a class="more-link" href="{{ url_for('content.page_view', title=post.title) }}">Read more &rarr;</a>
             </div>
         </div>
     </div>
