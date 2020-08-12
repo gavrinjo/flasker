@@ -15,7 +15,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
-    article = db.relationship("Article", backref="author", lazy="dynamic")
+    post = db.relationship("Post", backref="author", lazy="dynamic")
 
     def __repr__(self):
         return f"User:{self.username} Email:{self.email}"
@@ -48,7 +48,7 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-class Article(db.Model):
+class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # image = db.Column(db.)
     title = db.Column(db.String(64))

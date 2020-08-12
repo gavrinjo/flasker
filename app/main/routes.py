@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 from app import db
 from app.main import bp
 from app.main.forms import EditProfileForm
-from app.models import User, Article
+from app.models import User, Post
 
 
 
@@ -22,7 +22,7 @@ def before_request():
 def index():
     #user = User.query.filter_by(username=current_user.username).first_or_404()
     page = request.args.get("page", 1, type=int)
-    posts = Article.query.order_by(Article.timestamp.desc()).paginate(
+    posts = Post.query.order_by(Post.timestamp.desc()).paginate(
         page, current_app.config["POSTS_PER_PAGE"], False)
     next_url = url_for("main.index", page=posts.next_num) \
         if posts.has_next else None
@@ -35,7 +35,7 @@ def index():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    posts = user.article.order_by(Article.timestamp.desc()).all()
+    posts = user.post.order_by(Post.timestamp.desc()).all()
     return render_template("user.html", title=user.username, user=user, posts=posts)
 
 

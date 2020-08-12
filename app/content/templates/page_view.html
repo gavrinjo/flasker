@@ -14,7 +14,7 @@
         </head>
         <div class="blog-post-body">
             <img class="img-fluid" alt="image" src="https://hackersandslackers-cdn.storage.googleapis.com/2020/02/uWSGI@2x.jpg"/>
-            <p id="post{{ post.id }}">{{ post.body|safe }}</p>
+            <div id="post{{ post.id }}">{{ post.body|safe }}</div>
         </div>
     </div>
 {% endblock app_content %}
