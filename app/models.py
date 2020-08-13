@@ -59,3 +59,29 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"Title:{self.title} Subtitle:{self.subtitle} Body:{self.body}"
+
+
+class Comment(db.Model):
+    _N = 6
+
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime(), index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id")) # Author ID
+    post_id = db.Column(db.Integer, db.ForeignKey("post.id")) # Post ID
+    path = db.Column(db.Text, index=True)
+    parent_id = db.Column(db.Integer, db.ForeignKey("comment.id")) # Parent Comment ID
+    replies = db.relationship("Comment", backref=db.backref("parent", remote_side=[id]), lazy="dynamic")
+
+    def __repr__(self):
+        return f"User:{User.query.filter_by(id=self.user_id).first().username}, Comment:{self.post_id}"
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        prefix = self.parent.path + "." if self.parent else ""
+        self.path = prefix + "{:0{}d}".format(self.id, self._N)
+        db.session.commit()
+
+    def level(self):
+        return len(self.path) // self._N - 1

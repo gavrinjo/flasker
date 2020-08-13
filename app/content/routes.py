@@ -56,3 +56,5 @@ def delete_page(id=None):
     db.session.delete(post)
     db.session.commit()
     return redirect(url_for("main.index"))
+
+
