@@ -20,12 +20,12 @@ def postit():
     return render_template("postit.html", title="Post Content", form=form)
 
 
-@bp.route("/<id>_<title>", methods=["GET", "POST"])
+@bp.route("/<title>", methods=["GET", "POST"])
 # @login_required
-def page_view(id=None, title):
+def page_view(title):
     form = Comments()
-    post = Post.query.get(id) #filter_by(title=title).first_or_404()
-    comment = Comment.query.filter_by(post_id=post_id).first()
+    post = Post.query.filter_by(title=title).first_or_404()
+    comment = Comment.query.filter_by(post_id=post.id).all()
     return render_template("page_view.html", title=post.title, post=post, author=post.author.username, form=form, comment=comment)
 
 
