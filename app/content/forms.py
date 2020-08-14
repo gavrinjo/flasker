@@ -17,3 +17,7 @@ class EditPostForm(FlaskForm):
     post = TextAreaField("What is on your mind!", validators=[DataRequired()], id="summernote")
     submit = SubmitField("Submit")
     cancel = SubmitField("Cancel")
+
+class Comments(FlaskForm):
+    comment = TextAreaField("Comment")
+    submit = SubmitField("Submit")

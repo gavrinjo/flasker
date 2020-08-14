@@ -2,8 +2,8 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_required
 from app import db
 from app.content import bp, handlers
-from app.content.forms import PostForm, EditPostForm
-from app.models import Post
+from app.content.forms import PostForm, EditPostForm, Comments
+from app.models import Post, Comment
 from sqlalchemy.orm.attributes import flag_modified
 
 
@@ -20,11 +20,13 @@ def postit():
     return render_template("postit.html", title="Post Content", form=form)
 
 
-@bp.route("/<title>", methods=["GET", "POST"])
+@bp.route("/<id>_<title>", methods=["GET", "POST"])
 # @login_required
-def page_view(title):
-    post = Post.query.filter_by(title=title).first_or_404()
-    return render_template("page_view.html", title=post.title, post=post, author=post.author.username)
+def page_view(id=None, title):
+    form = Comments()
+    post = Post.query.get(id) #filter_by(title=title).first_or_404()
+    comment = Comment.query.filter_by(post_id=post_id).first()
+    return render_template("page_view.html", title=post.title, post=post, author=post.author.username, form=form, comment=comment)
 
 
 @bp.route("/edit_page/<id>", methods=["GET", "POST"])
