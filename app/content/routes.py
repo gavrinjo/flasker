@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from app import db
 from app.content import bp, handlers
 from app.content.forms import PostForm, EditPostForm, Comments
-from app.models import Post, Comment
+from app.models import Post, Comment, User
 from sqlalchemy.orm.attributes import flag_modified
 
 
@@ -20,13 +20,14 @@ def postit():
     return render_template("postit.html", title="Post Content", form=form)
 
 
-@bp.route("/<title>", methods=["GET", "POST"])
+@bp.route("/<id>", methods=["GET", "POST"])
 # @login_required
-def page_view(title):
+def page_view(id=None):
     form = Comments()
-    post = Post.query.filter_by(title=title).first_or_404()
+    post = Post.query.get(id)
     comment = Comment.query.filter_by(post_id=post.id).all()
-    return render_template("page_view.html", title=post.title, post=post, author=post.author.username, form=form, comment=comment)
+    author = User
+    return render_template("page_view.html", post=post, form=form, comments=comment, author=author)
 
 
 @bp.route("/edit_page/<id>", methods=["GET", "POST"])

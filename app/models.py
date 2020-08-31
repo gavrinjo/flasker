@@ -74,7 +74,7 @@ class Comment(db.Model):
     replies = db.relationship("Comment", backref=db.backref("parent", remote_side=[id]), lazy="dynamic")
 
     def __repr__(self):
-        return f"User:{User.query.filter_by(id=self.user_id).first().username}, Comment:{self.post_id}"
+        return f"User:{User.query.filter_by(id=self.user_id).first().username}, Comment:{self.text}"
 
     def save(self):
         db.session.add(self)

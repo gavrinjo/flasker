@@ -5,9 +5,9 @@
             </div>
             <div class="col-lg-8">
                 <div class="card-body">
-                    <h4 class="card-title"><a class="card-link" href="{{ url_for('content.page_view', title=post.title) }}">{{ post.title|safe }}</a></h4>
+                    <h4 class="card-title"><a class="card-link" href="{{ url_for('content.page_view', id=post.id) }}">{{ post.title|safe }}</a></h4>
                     <p class="card-text">{{ post.body | truncate(254, True) | safe }}</p>
-                    <p><small class="text-muted"><a class="card-link" href="{{ url_for('content.page_view', title=post.title) }}">Read more &rarr;</a></small></p>
+                    <p><small class="text-muted"><a class="card-link" href="{{ url_for('content.page_view', id=post.id) }}">Read more &rarr;</a></small></p>
                     <p>
                         <small class="text-muted">
                             <span><a class="card-link" href="{{ url_for('main.user', username=post.author.username) }}">{{ post.author.username }}</a></span>

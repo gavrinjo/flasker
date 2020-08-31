@@ -17,7 +17,9 @@
             <div id="post{{ post.id }}">{{ post.body|safe }}</div>
         </div>
         <div>
-            <span>{{ comment.text }}</span>
+            {% for comment in comments %}
+            <p>{{ '{}{}: {}'.format('  ' * comment.level(), author.query.filter_by(id=comment.user_id).first().username, comment.text) }}</p>
+            {% endfor %}
         </div>
     </div>
 {% endblock app_content %}
